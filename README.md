@@ -1,6 +1,15 @@
 # Weyl f(Q,T) Gravity Analysis
 
-This project investigates whether Weyl f(Q,T) gravity can explain late-time cosmic acceleration without invoking dark energy.
+This project investigates whether Weyl f(Q,T) gravity can explain late-time cosmic acceleration without invoking dark energy. 
+
+## Reference
+This implementation is based on the Weyl f(Q,T) gravity model discussed in:
+
+GN Gadbail et al. (8 Sep 2022)  
+"Interaction of divergence-free deceleration parameter in Weyl-type f(Q,T) gravity"  
+Chinese Journal of Physics
+
+arXiv:2209.04348
 
 Instead of directly solving the full modified gravity field equations, the analysis tests observational constraints under a divergence-free parameterization of the deceleration parameter inspired by Weyl f(Q,T) gravity.
 
