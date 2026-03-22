@@ -1,25 +1,40 @@
 # Weyl f(Q,T) Gravity Analysis
 
-This project investigates whether the Weyl f(Q,T) gravity model can explain late-time cosmic acceleration without invoking dark energy.
+This project investigates whether Weyl f(Q,T) gravity can explain late-time cosmic acceleration without invoking dark energy.
 
-The analysis compares theoretical predictions with observational cosmology datasets using Markov Chain Monte Carlo (MCMC).
+Instead of directly solving the full modified gravity field equations, the analysis tests observational constraints under a divergence-free parameterization of the deceleration parameter inspired by Weyl f(Q,T) gravity.
 
-## Datasets
+## Method
+
+The deceleration parameter is parameterized using free parameters:
+
+q0  
+q1  
+
+which remain finite for all redshifts.
+
+Markov Chain Monte Carlo (MCMC) using the emcee sampler is used to estimate posterior distributions of these parameters.
+
+## Data
+
+The model predictions are compared with observational cosmology datasets:
+
 - BAO
 - CMB
 - eBOSS
 - DESI
 
-## Parameters fitted
-- q0
-- q1
-- MB
+## Libraries Used
 
-Assumption:
-H0 = 70 km/s/Mpc
+numpy  
+scipy  
+emcee  
+corner  
+matplotlib  
+tqdm
 
-## Method
-Posterior distributions are obtained using the emcee MCMC sampler and visualized with corner plots.
+## Repository Structure
 
-## Libraries
-numpy, scipy, emcee, matplotlib, corner, tqdm
+data/ → observational datasets  
+src/ → cosmology and MCMC implementation  
+notebooks/ → analysis notebook reproducing results
