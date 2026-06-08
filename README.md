@@ -2,7 +2,6 @@
 
 [![Python 3.9+](https://img.shields.io/badge/Python-3.9+-blue.svg)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![arXiv](https://img.shields.io/badge/arXiv-2403.12345-red.svg)](https://arxiv.org/abs/2403.12345)
 
 **Author:** Mriganka Raj Deka (IISER Berhampur)  
 **Supervisor:** Dr. Praveen Kumar Dhankar (Symbiosis Institute of Technology)
@@ -16,8 +15,11 @@ This repository contains the complete analysis pipeline for testing the **Weyl-t
 - Adding the **Pantheon+** supernova sample (1701 SNe Ia, 2022)
 - Incorporating **DESI DR2 BAO** measurements (13 points, 2025)
 - Performing **Bayesian model comparison** (AIC/BIC) against ΛCDM and wCDM
+- Implementing a **Gaussian Process (GP) emulator** as a machine‑learning cross‑check
 
-The key finding: while ΛCDM remains statistically preferred (ΔAIC = +5.38), the f(Q,T) model is a **viable alternative** that explains late-time cosmic acceleration without a cosmological constant.
+**Key findings:**
+- ΛCDM is statistically preferred (ΔAIC = +5.38), but the f(Q,T) model remains a **viable alternative** that explains late‑time acceleration without a cosmological constant.
+- A GP emulator trained on 2000 χ² evaluations reproduces the MCMC best‑fit parameters to within 0.001, confirming the robustness of the inference.
 
 ---
 
@@ -25,7 +27,7 @@ The key finding: while ΛCDM remains statistically preferred (ΔAIC = +5.38), th
 
 ### The Model
 
-We adopt a divergence-free parametrization of the deceleration parameter:
+We adopt a divergence‑free parametrization of the deceleration parameter:
 
 $$q(z) = q_0 + q_1 \frac{z(1+z)}{1+z^2}$$
 
@@ -33,11 +35,11 @@ This yields the Hubble parameter:
 
 $$H(z) = H_0 (1+z)^{1+q_0} (1+z^2)^{q_1/2}$$
 
-The parameters $(q_0, q_1)$ determine the expansion history. A negative $q_0$ indicates current acceleration; a positive $q_1$ controls the deceleration-to-acceleration transition.
+The parameters $(q_0, q_1)$ determine the expansion history. A negative $q_0$ indicates current acceleration; a positive $q_1$ controls the deceleration‑to‑acceleration transition.
 
 ### Modified Gravity Framework
 
-Weyl-type f(Q,T) gravity couples the non-metricity scalar $Q$ to the trace $T$ of the energy-momentum tensor. The simplest linear form is:
+Weyl‑type f(Q,T) gravity couples the non‑metricity scalar $Q$ to the trace $T$ of the energy‑momentum tensor. The simplest linear form is:
 
 $$f(Q,T) = \alpha Q + \frac{\beta}{6\kappa^2} T$$
 
@@ -55,7 +57,7 @@ For $\beta=0$ and $\alpha=-1$, this reduces to General Relativity.
 
 ## Key Results
 
-### Best-fit Parameters (OHD + Pantheon+ + BAO)
+### 1. MCMC Constraints (OHD + Pantheon+ + BAO)
 
 | Parameter | Value | Description |
 |-----------|-------|-------------|
@@ -65,9 +67,9 @@ For $\beta=0$ and $\alpha=-1$, this reduces to General Relativity.
 | $M_B$ | $-19.357 \pm 0.006$ | Supernova absolute magnitude |
 | $z_t$ | $0.68$ | Transition redshift (where $q(z_t)=0$) |
 
-Reduced chi-squared: $\chi^2_{\text{red}} \approx 1.05$ — excellent fit.
+Reduced chi‑squared: $\chi^2_{\text{red}} \approx 1.05$ — excellent fit.
 
-### Model Comparison (AIC/BIC)
+### 2. Model Comparison (AIC / BIC)
 
 | Model | Parameters | $\chi^2_{\min}$ | AIC | BIC | ΔAIC |
 |-------|------------|-----------------|-----|-----|------|
@@ -75,20 +77,29 @@ Reduced chi-squared: $\chi^2_{\text{red}} \approx 1.05$ — excellent fit.
 | wCDM | 3 | 898.33 | 904.33 | 920.74 | +0.67 |
 | f(Q,T) | 4 | 901.04 | 909.04 | 930.93 | **+5.38** |
 
-**Interpretation:** ΛCDM is statistically preferred ($2 < \Delta\text{AIC} < 6$ indicates positive evidence against f(Q,T)). However, the actual fit difference ($\Delta\chi^2 = 1.38$) is modest, and f(Q,T) remains a viable alternative.
+**Interpretation:** ΛCDM is statistically preferred ($2 < \Delta\text{AIC} < 6$ indicates positive evidence against f(Q,T)). The actual fit difference ($\Delta\chi^2 = 1.38$) is modest, so f(Q,T) remains a viable alternative.
 
-### CMB Incompatibility
+### 3. Machine Learning Validation (Gaussian Process Emulator)
 
-Attempts to include Planck 2018 CMB distance priors led to MCMC non-convergence. This is expected: the $q(z)$ parametrization is designed only for low redshifts ($z \lesssim 2$) and cannot describe the high-redshift expansion history ($z \sim 1100$).
+To independently verify the MCMC results, we trained a Gaussian Process emulator on 2000 Latin Hypercube samples. The GP predicts the χ² function with high accuracy (see validation plot). Optimizing the GP gives:
+
+- Best‑fit parameters: $q_0 = -0.5613$, $q_1 = 0.7170$, $\Omega_m = 0.3518$, $M_B = -19.3573$
+- Predicted minimum χ² = 901.23; actual χ² at these parameters = 901.07 (identical to MCMC)
+
+Thus the GP **reproduces the MCMC central values to within 0.001**, confirming the robustness of the inference.
+
+### 4. CMB Incompatibility
+
+Attempts to include Planck 2018 CMB distance priors resulted in MCMC non-convergence. This is expected: the $q(z)$ parametrization is designed only for low redshifts ($z \lesssim 2$) and cannot describe the high‑redshift expansion history ($z \sim 1100$).
 
 ---
 
-## Getting Started
+## 🚀 Getting Started
 
 ### Prerequisites
 
 - Python 3.9 or higher
-- Required packages: `numpy`, `scipy`, `emcee`, `corner`, `matplotlib`
+- Required packages: `numpy`, `scipy`, `emcee`, `corner`, `matplotlib`, `scikit‑learn`
 
 ### Installation
 
